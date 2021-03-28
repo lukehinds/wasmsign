@@ -90,6 +90,42 @@ impl Config {
                     .default_value(DEFAULT_SYMBOL_NAME)
                     .help("Name of the exported symbol containing the signature"),
             )
+            .arg(
+                Arg::with_name("fulcio_address")
+                    // .short("f")
+                    .long("fulcio_address")
+                    .takes_value(true)
+                    .required(true)
+                    .default_value("http://127.0.0.1:5555")
+                    .help("Fulcio server address"),
+            )
+            .arg(
+                Arg::with_name("oidc-issuer")
+                    // .short("oi")
+                    .long("oidc-issuer")
+                    .takes_value(true)
+                    .required(true)
+                    .default_value("https://oauth2.sigstore.dev/auth")
+                    .help("OIDC provider to be used to issue ID token"),
+            )
+            .arg(
+                Arg::with_name("oidc-client-id")
+                    // .short("oci")
+                    .long("oidc-client-id")
+                    .takes_value(true)
+                    .required(true)
+                    .default_value("sigstore")
+                    .help("client ID for application"),
+            )
+            .arg(
+                Arg::with_name("oidc-client-secret")
+                    // .short("ocs")
+                    .long("oidc-client-secret")
+                    .takes_value(true)
+                    .required(true)
+                    .default_value("")
+                    .help("client ID secret"),
+            )
             .get_matches();
         let keygen = matches.is_present("keygen");
         let sign = matches.is_present("sign");

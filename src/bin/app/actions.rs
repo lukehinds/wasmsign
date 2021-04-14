@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use wasmsign;
 use wasmsign::signature::eddsa::*;
+use wasmsign::openid::*;
 
 pub fn keygen(config: &Config) -> Result<(), WError> {
     let default_signature_alg = EdDSA;
@@ -74,4 +75,13 @@ pub fn verify(config: &Config) -> Result<(), WError> {
     let mut module_bytes = vec![];
     File::open(input_path)?.read_to_end(&mut module_bytes)?;
     wasmsign::verify(&module_bytes, &pk, ad, &config.symbol_name)
+}
+
+pub fn keyless(config: &Config) -> Result<(), WError> {
+    // call things such as open id, key creation , call fuclio, rekor
+
+    session::testmod();
+    let idresult = session::OpenIDConnect();
+    print!("{:?}", idresult);
+    Ok(())
 }

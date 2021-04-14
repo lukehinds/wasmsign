@@ -7,6 +7,7 @@ pub struct Config {
     pub keygen: bool,
     pub sign: bool,
     pub verify: bool,
+    pub keyless: bool,
     pub input_path: Option<PathBuf>,
     pub output_path: Option<PathBuf>,
     pub pk_path: Option<PathBuf>,
@@ -40,6 +41,13 @@ impl Config {
                     .long("verify")
                     .takes_value(false)
                     .help("Verify a file"),
+            )
+            .arg(
+                Arg::with_name("keyless")
+                    .short("K")
+                    .long("keyless")
+                    .takes_value(false)
+                    .help("Generate a key pair"),
             )
             .arg(
                 Arg::with_name("input-path")
@@ -86,7 +94,7 @@ impl Config {
                     .short("n")
                     .long("symbol-name")
                     .takes_value(true)
-                    .required(true)
+                    // .required(true)
                     .default_value(DEFAULT_SYMBOL_NAME)
                     .help("Name of the exported symbol containing the signature"),
             )
@@ -95,7 +103,7 @@ impl Config {
                     // .short("f")
                     .long("fulcio_address")
                     .takes_value(true)
-                    .required(true)
+                    // .required(true)
                     .default_value("http://127.0.0.1:5555")
                     .help("Fulcio server address"),
             )
@@ -104,7 +112,7 @@ impl Config {
                     // .short("oi")
                     .long("oidc-issuer")
                     .takes_value(true)
-                    .required(true)
+                    // .required(true)
                     .default_value("https://oauth2.sigstore.dev/auth")
                     .help("OIDC provider to be used to issue ID token"),
             )
@@ -113,7 +121,7 @@ impl Config {
                     // .short("oci")
                     .long("oidc-client-id")
                     .takes_value(true)
-                    .required(true)
+                    // .required(true)
                     .default_value("sigstore")
                     .help("client ID for application"),
             )
@@ -122,7 +130,7 @@ impl Config {
                     // .short("ocs")
                     .long("oidc-client-secret")
                     .takes_value(true)
-                    .required(true)
+                    // .required(true)
                     .default_value("")
                     .help("client ID secret"),
             )
@@ -130,6 +138,7 @@ impl Config {
         let keygen = matches.is_present("keygen");
         let sign = matches.is_present("sign");
         let verify = matches.is_present("verify");
+        let keyless = matches.is_present("keyless");
         let input_path = matches.value_of("input-path").map(PathBuf::from);
         let output_path = matches.value_of("output-path").map(PathBuf::from);
         let pk_path = matches.value_of("pk-path").map(PathBuf::from);
@@ -140,6 +149,7 @@ impl Config {
             keygen,
             sign,
             verify,
+            keyless,
             input_path,
             output_path,
             pk_path,

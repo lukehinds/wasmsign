@@ -18,6 +18,9 @@ fn main() -> Result<(), WError> {
     if config.verify {
         return actions::verify(&config);
     }
+    if config.keyless {
+        return actions::keyless(&config);
+    }
     eprintln!("No action specified on the command-line");
     Ok(())
 }

@@ -4,6 +4,7 @@ use parity_wasm;
 
 pub mod errors;
 pub mod signature;
+pub mod openid;
 mod wasm_signature;
 
 pub use self::errors::*;
